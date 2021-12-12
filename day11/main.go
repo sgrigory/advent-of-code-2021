@@ -8,7 +8,7 @@ import (
 )
 
 func main() {
-	fmt.Println("1")
+
 	content, err := ioutil.ReadFile("input.txt")
 	if err != nil {
 		log.Fatal(err)
