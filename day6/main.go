@@ -50,11 +50,6 @@ func count_total(counts []int) int {
 	return s
 }
 
-func run_part2(content []byte) int {
-
-	return 0
-}
-
 func main() {
 	content, err := ioutil.ReadFile("input.txt")
 	if err != nil {
