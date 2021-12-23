@@ -70,7 +70,6 @@ func run_part2(content []byte) uint64 {
 	fmt.Println("parsing...")
 	for i, row := range rows {
 		match := pattern.FindStringSubmatch(row)
-		//fmt.Println(row, match)
 		flag[i] = match[1] == "on"
 		x0[i], _ = strconv.Atoi(match[2])
 		x1[i], _ = strconv.Atoi(match[3])
@@ -93,8 +92,6 @@ func run_part2(content []byte) uint64 {
 		all_z = append(all_z, val+1)
 	}
 
-	// -10 10 -> 0 1
-	// 9 10 -> 0 1
 	sort.Ints(all_x)
 	sort.Ints(all_y)
 	sort.Ints(all_z)
@@ -104,7 +101,6 @@ func run_part2(content []byte) uint64 {
 	coord_map_z := map[int]int{}
 
 	for i := range all_x {
-		//fmt.Println(i, all_x[i])
 		coord_map_x[all_x[i]] = i
 		coord_map_y[all_y[i]] = i
 		coord_map_z[all_z[i]] = i
@@ -117,9 +113,6 @@ func run_part2(content []byte) uint64 {
 			for y := coord_map_y[y0[i]]; y <= coord_map_y[y1[i]]; y++ {
 				for z := coord_map_z[z0[i]]; z <= coord_map_z[z1[i]]; z++ {
 					field[x][y][z] = flag[i]
-					if flag[i] {
-						//fmt.Println(x, y, z, ": field", field[x][y][z])
-					}
 				}
 			}
 		}
@@ -132,7 +125,6 @@ func run_part2(content []byte) uint64 {
 	for x := 0; x < len(all_x); x++ {
 		for y := 0; y < len(all_y); y++ {
 			for z := 0; z < len(all_z); z++ {
-				//fmt.Println("cell ", x, y, z, field[x][y][z])
 				if field[x][y][z] {
 					var x_size uint64
 					var y_size uint64
@@ -152,7 +144,6 @@ func run_part2(content []byte) uint64 {
 					} else {
 						z_size = 1
 					}
-					//fmt.Println(x, y, z, "sizes: ", x_size, y_size, z_size)
 					s += x_size * y_size * z_size
 				}
 			}
@@ -161,65 +152,6 @@ func run_part2(content []byte) uint64 {
 
 	return s
 }
-
-// type Rect struct {
-// 	x0 int
-// 	x1 int
-// 	y0 int
-// 	y1 int
-// 	z0 int
-// 	z1 int
-// }
-
-// func (r Rect) volume() int {
-// 	return (r.x1 - r.x0 + 1) * (r.y1 - r.y0 + 1) * (r.z1 - r.z0 + 1)
-// }
-
-// func run_part2(content []byte) int {
-
-// 	var rects []Rect
-
-// 	rows := strings.Split(string(content), "\n")
-
-// 	pattern := regexp.MustCompile(`(?P<switch>on|off) x=(?P<x0>-?\d+)\.\.(?P<x1>-?\d+),y=(?P<y0>-?\d+)\.\.(?P<y1>-?\d+),z=(?P<z0>-?\d+)\.\.(?P<z1>-?\d+)`)
-
-// 	for _, row := range rows {
-// 		match := pattern.FindStringSubmatch(row)
-// 		//fmt.Println(row, match)
-// 		flag := match[1] == "on"
-// 		x0, _ := strconv.Atoi(match[2])
-// 		x1, _ := strconv.Atoi(match[3])
-// 		y0, _ := strconv.Atoi(match[4])
-// 		y1, _ := strconv.Atoi(match[5])
-// 		z0, _ := strconv.Atoi(match[6])
-// 		z1, _ := strconv.Atoi(match[7])
-
-// 		fmt.Println(x0, x1, y0, y1, z0, z1)
-
-// 		new_rect := Rect{x0, x1, y0, y1, z0, z1}
-
-// 		new_rects := []Rect{new_rect}
-// 		for _, rect := range rects {
-// 			generated_rects := get_intersection(rect, new_rect, flag)
-// 			fmt.Println("got generated rects ", generated_rects)
-// 			new_rects = append(new_rects, generated_rects...)
-// 		}
-// 		rects = new_rects
-// 	}
-
-// 	s := 0
-// 	for _, r := range rects {
-// 		fmt.Println("final rect ", r, " volume ", r.volume())
-// 		s += r.volume()
-// 	}
-
-// 	return s
-// }
-
-// func get_intersection(rect1 Rect, rect2 Rect, flag bool) []Rect {
-// 	// |   | |   |
-// 	return []Rect{rect1, rect2}
-// }
 
 func init_field(size int) [][][]bool {
 
